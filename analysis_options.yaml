@@ -1,0 +1,13 @@
+include: package:flutter_lints/flutter.yaml
+
+# Flutter SDK 내부 파일은 분석에서 제외
+analyzer:
+  exclude:
+    - flutter/**
+    - build/**
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    avoid_print: false
