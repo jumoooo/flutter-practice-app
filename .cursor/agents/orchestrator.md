@@ -181,13 +181,16 @@ When user makes a request:
 - **Status**: Active
 
 #### 2. agentBuilder
-- **Purpose**: Agent creation and management
+- **Purpose**: Agent creation, modification, upgrade, and continuous improvement
 - **Capabilities**:
   - Create new agents following Cursor standards
+  - Modify existing agents (fix issues, add features, improve workflows)
+  - Upgrade agents (enhance capabilities, optimize performance)
+  - Detect issues in agent workflows and suggest improvements
   - Collect structured information
   - Generate agent files, skills, rules
   - Check for conflicts
-- **Triggers**: "Agent 만들", "Agent 생성", "새 Agent"
+- **Triggers**: "Agent 만들", "Agent 생성", "새 Agent", "Agent 수정", "Agent 업그레이드", agent workflow issues
 - **MCP Tools**: Codebase Search, Context7 (for standards)
 - **Status**: Active
 
@@ -212,6 +215,18 @@ When user makes a request:
 - **MCP Tools**: Sequential Thinking, Context7, Codebase Search, Browser Tools
 - **Status**: Active
 
+#### 5. documentUploader
+- **Purpose**: Multi-platform document upload
+- **Capabilities**:
+  - Analyze markdown files and create upload plans
+  - Upload documents to Notion (API + Browser automation)
+  - Verify upload quality at every step
+  - Handle errors with automatic fallback
+  - Preserve existing data (never modify or delete)
+- **Triggers**: Document upload requests, "문서 업로드", "Notion에 올려줘", ".md" file operations
+- **MCP Tools**: Notion MCP, Playwright MCP, Codebase Search
+- **Status**: Active
+
 ### Future Agents
 - Registry will be updated when new agents are added
 - agentBuilder will update orchestrator when creating new agents
@@ -225,10 +240,18 @@ When user makes a request:
 - **When to use**: Flutter learning questions, concept explanations, practice problems
 - **Example**: "StatelessWidget이 뭐야?" → studyAgent
 
-### Rule 2: Agent Creation Tasks
+### Rule 2: Agent Creation, Modification, and Upgrade Tasks
 - **Primary Agent**: agentBuilder
-- **When to use**: "Agent 만들어줘", "새 Agent 생성"
-- **Example**: "코드 리뷰 Agent 만들어줘" → agentBuilder
+- **When to use**: 
+  - "Agent 만들어줘", "새 Agent 생성" (Agent 생성)
+  - "Agent 수정", "Agent 개선", "Agent 업데이트" (Agent 수정)
+  - "Agent 업그레이드", "Agent 향상" (Agent 업그레이드)
+  - Agent 작업 중 문제 발생 시 (자동 감지 및 개선 제안)
+- **Example**: 
+  - "코드 리뷰 Agent 만들어줘" → agentBuilder
+  - "documentUploader Agent 수정해줘" → agentBuilder
+  - "Agent 업그레이드 필요해" → agentBuilder
+  - documentUploader가 부모 페이지 하위에 생성 못하는 문제 발생 → agentBuilder가 자동 감지 및 개선 제안
 
 ### Rule 3: Complex/Multi-Step Tasks
 - **Primary Agent**: orchestrator (coordinates)
@@ -241,7 +264,13 @@ When user makes a request:
 - **When to use**: Planning requests, task breakdown, prioritization, checklist creation
 - **Example**: "계획 세워줘", "작업 계획 만들어줘" → planner
 
-### Rule 5: Ambiguous Requests
+### Rule 5: Document Upload Tasks
+- **Primary Agent**: documentUploader
+- **When to use**: Document upload requests, markdown file uploads, "Notion에 올려줘", ".md" file operations
+- **Example**: "README.md를 Notion에 업로드해줘" → documentUploader
+- **Note**: Agent creates upload plan and gets user confirmation before proceeding
+
+### Rule 6: Ambiguous Requests
 - **Primary Agent**: orchestrator
 - **Action**: Ask clarifying questions, then distribute
 - **When to use**: Unclear which agent should handle
