@@ -28,7 +28,243 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'Flutter 학습 - Chapter 1'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const BottomNavigationExampleScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/counter': (context) => const MyHomePage(title: '카운터 & Todo 예제'),
+        '/detail': (context) =>
+            const DetailScreen(id: 11, title: 'Named Route 예제'),
+      },
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('홈 화면'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              '홈 화면입니다',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/detail');
+              },
+              child: const Text('상세보기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BottomNavigationExampleScreen extends StatefulWidget {
+  const BottomNavigationExampleScreen({super.key});
+
+  @override
+  State<BottomNavigationExampleScreen> createState() =>
+      _BottomNavigationExampleScreenState();
+}
+
+class _BottomNavigationExampleScreenState
+    extends State<BottomNavigationExampleScreen> {
+  int _selectedTabIndex = 0;
+
+  final List<Widget> _navigationPages = const [
+    BottomNavHomePage(),
+    BottomNavSearchPage(),
+    BottomNavProfilePage(),
+  ];
+
+  void _onBottomTabSelected(int newIndex) {
+    if (_selectedTabIndex == newIndex) return;
+
+    setState(() {
+      _selectedTabIndex = newIndex;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Bottom Navigation + Drawer 예제'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.red,
+              ),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  '메뉴',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('홈'),
+              onTap: () {
+                Navigator.of(context).pop();
+                _onBottomTabSelected(0);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.search),
+              title: const Text('검색'),
+              onTap: () {
+                Navigator.of(context).pop();
+                _onBottomTabSelected(1);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('프로필'),
+              onTap: () {
+                Navigator.of(context).pop();
+                _onBottomTabSelected(2);
+              },
+            ),
+          ],
+        ),
+      ),
+      body: _navigationPages[_selectedTabIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTabIndex,
+        onTap: _onBottomTabSelected,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search_outlined),
+            activeIcon: Icon(Icons.search),
+            label: '검색',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: '프로필',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BottomNavHomePage extends StatelessWidget {
+  const BottomNavHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        '홈 화면입니다 🏠',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class BottomNavSearchPage extends StatelessWidget {
+  const BottomNavSearchPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        '검색 화면입니다 🔍',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class BottomNavProfilePage extends StatelessWidget {
+  const BottomNavProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        '프로필 화면입니다 👤',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  const DetailScreen({super.key, required this.id, required this.title});
+  final int id;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('상세 화면'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'ID: $id, Title: $title',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('돌아가기'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
