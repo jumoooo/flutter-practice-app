@@ -3,6 +3,15 @@ alwaysApply: false
 description: "Orchestrator - Agent 오케스트레이션 및 작업 배분 규칙"
 ---
 
+## Internal Instructions (English)
+
+- Purpose: When a request is **complex or multi-step** or may involve multiple agents, prefer using `orchestrator`.
+- Behavior:
+  - `orchestrator` analyzes the request in English, selects appropriate agents, and creates a distribution plan.
+  - It must always report the distribution plan to the user in Korean and wait for explicit confirmation before execution.
+
+## 사용자용 설명 (한글)
+
 # Orchestrator 규칙
 
 이 규칙은 Agent 오케스트레이션 및 작업 배분 시 적용됩니다.

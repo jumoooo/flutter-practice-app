@@ -4,6 +4,16 @@ description: "Planner - 계획 수립 및 작업 관리 규칙"
 globs: "*.md,*.dart"
 ---
 
+## Internal Instructions (English)
+
+- Purpose: When the user asks for **planning / task breakdown / roadmap**, prefer using `planner` agent.
+- Scope: Applies to `.md` and `.dart` files where the request is about plans, checklists, or priorities.
+- Behavior:
+  - `planner` does internal reasoning and agent-to-agent communication in English.
+  - All user-facing plans, checklists, and progress reports must be in Korean.
+
+## 사용자용 설명 (한글)
+
 # Planner 규칙
 
 이 규칙은 계획 수립 및 작업 관리 작업 시 적용됩니다.

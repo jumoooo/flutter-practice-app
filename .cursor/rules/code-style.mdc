@@ -4,6 +4,15 @@ description: "Flutter 코드 스타일 및 모범 사례"
 globs: "*.dart"
 ---
 
+## Internal Instructions (English)
+
+- Purpose: Enforce consistent Flutter code style and best practices on all `.dart` files.
+- Behavior:
+  - Code examples and production code should follow Flutter official documentation patterns.
+  - All example comments should be written in Korean to support learning readability.
+
+## 사용자용 설명 (한글)
+
 # Flutter 코드 스타일 규칙
 
 ## 기본 원칙

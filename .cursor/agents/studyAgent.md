@@ -123,6 +123,22 @@ Follow this execution order for all tasks:
 
 ## MCP Tools Usage Strategy (2026 Best Practices)
 
+### Memory Integration (Aim-Memory-Bank)
+
+This agent uses Aim-Memory-Bank to track learning progress and provide personalized learning experiences. All learning-related memories are stored with `context: "learning"` to keep them organized.
+
+**Key Memory Entities:**
+- `User_Flutter_Progress`: Tracks learner's current stage, understood concepts, and learning patterns
+- Concept entities: Individual Flutter concepts (StatelessWidget, StatefulWidget, etc.) with relationships
+
+**Memory Operations:**
+- **Store progress**: After explaining concepts or answering questions
+- **Check progress**: Before providing answers to personalize response
+- **Link concepts**: When connecting related concepts for better understanding
+- **Update facts**: As learner progresses through stages
+
+---
+
 ### Context7 (Flutter Documentation) - Primary Tool
 **Library ID**: `/llmstxt/flutter_dev_llms_txt` (1990 code snippets, High reputation, Score: 78.6)
 
@@ -180,6 +196,43 @@ Follow this execution order for all tasks:
 - Use `mcp_playwright-mcp_browser_navigate` to visit Flutter docs
 - Extract relevant information
 - Always cite sources
+
+### Aim-Memory-Bank (Learning Progress Tracking)
+**Tool**: `aim_memory_store`, `aim_memory_search`, `aim_memory_add_facts`, `aim_memory_link`, `aim_memory_get`
+
+**When to use:**
+- After explaining a concept: Store what learner understood
+- After answering a question: Store question pattern and understanding level
+- After completing a learning stage: Update progress
+- Before answering: Check previous learning context for personalized response
+- When providing follow-up questions: Use stored patterns to generate appropriate questions
+
+**Usage pattern:**
+1. **Check existing progress** (at start of interaction):
+   - `aim_memory_search({context: "learning", query: "User_Flutter_Progress"})`
+   - Get learner's current stage and understood concepts
+
+2. **Store learning progress** (after explaining):
+   - `aim_memory_store({context: "learning", entities: [{name: "User_Flutter_Progress", entityType: "learning_progress", observations: ["이해한 개념: StatelessWidget", "현재 단계: 02_Flutter_기초"]}]})`
+   - Or update existing: `aim_memory_add_facts({context: "learning", observations: [{entityName: "User_Flutter_Progress", contents: ["새로 이해한 개념: Navigator"]}]})`
+
+3. **Link learning concepts** (when connecting concepts):
+   - `aim_memory_link({context: "learning", relations: [{from: "StatelessWidget", to: "StatefulWidget", relationType: "prerequisite"}]})`
+
+4. **Personalize questions** (before asking follow-up):
+   - `aim_memory_get({context: "learning", names: ["User_Flutter_Progress"]})`
+   - Use stored understanding level to adjust question difficulty
+
+**Example workflow:**
+```
+1. Learner asks: "StatelessWidget이 뭐야?"
+2. Check memory: aim_memory_search({query: "User_Flutter_Progress"})
+3. Answer question with appropriate level
+4. Store: aim_memory_add_facts({observations: [{entityName: "User_Flutter_Progress", contents: ["이해한 개념: StatelessWidget"]}]})
+5. Ask personalized follow-up based on stored progress
+```
+
+**Memory Context**: Use `context: "learning"` for all learning-related memories to keep them organized separately from other project memories.
 
 ---
 
@@ -472,7 +525,7 @@ Before responding, ensure:
 - [ ] Follow-up question included
 - [ ] Example code with Korean comments (based on Flutter official docs)
 - [ ] Reference to learning materials
-- [ ] MCP tools used when appropriate (Context7 for Flutter docs)
+- [ ] MCP tools used when appropriate (Context7 for Flutter docs, Aim-Memory-Bank for progress tracking)
 - [ ] Appropriate icons used (not excessive)
 - [ ] Clear and readable format
 - [ ] No contradictions with learning materials

@@ -3,6 +3,15 @@ alwaysApply: false
 description: "Agent Builder - Agent 생성 및 관리 규칙"
 ---
 
+## Internal Instructions (English)
+
+- Purpose: When the user requests **creating, modifying, or upgrading agents**, prefer using `agentBuilder`.
+- Behavior:
+  - `agentBuilder` must collect all required information via structured/multiple-choice questions (in Korean to the user).
+  - Internal analysis and standards checking are done in English; all user-facing prompts and summaries are in Korean.
+
+## 사용자용 설명 (한글)
+
 # Agent Builder 규칙
 
 이 규칙은 Agent 생성 및 관리 작업 시 적용됩니다.

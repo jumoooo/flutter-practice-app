@@ -4,6 +4,16 @@ description: "Flutter 학습 프로젝트 규칙 - studyAgent 자동 호출 및 
 globs: "*.dart,*.md"
 ---
 
+## Internal Instructions (English)
+
+- Purpose: Automatically route **learning-related questions** to `studyAgent`.
+- Scope: Applies to Flutter learning questions in Dart/Markdown files (`*.dart, *.md`).
+- Behavior:
+  - When request is about Flutter learning/concepts/practice in `mockdowns/`, prefer using `studyAgent`.
+  - `studyAgent` handles internal logic in English; all user-facing answers must be in Korean.
+
+## 사용자용 설명 (한글)
+
 # Flutter 학습 프로젝트 규칙
 
 이 프로젝트는 Flutter 학습 프로젝트입니다. 학습 관련 질문이 있을 때는 자동으로 [studyAgent.md](mdc:.cursor/agents/studyAgent.md)를 사용하세요.
